@@ -232,9 +232,6 @@
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
-            text-decoration: none;
-            display: block;
-            color: inherit;
         }
         
         .movie-card:hover {
@@ -609,4 +606,192 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 MovieFl
+                <p>&copy; 2023 MovieFlix. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript for Dynamic Functionality -->
+    <script>
+        // Sample movie data (in a real app, this would come from an API)
+        const movieData = {
+            bollywood: [
+                { id: 1, title: "Pathaan", year: 2023, rating: 4.5, image: "https://via.placeholder.com/200x300?text=Pathaan" },
+                { id: 2, title: "Brahmāstra", year: 2022, rating: 4.0, image: "https://via.placeholder.com/200x300?text=Brahmastra" },
+                { id: 3, title: "RRR", year: 2022, rating: 4.8, image: "https://via.placeholder.com/200x300?text=RRR" },
+                { id: 4, title: "KGF Chapter 2", year: 2022, rating: 4.7, image: "https://via.placeholder.com/200x300?text=KGF+2" },
+                { id: 5, title: "Dangal", year: 2016, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Dangal" },
+                { id: 6, title: "3 Idiots", year: 2009, rating: 4.8, image: "https://via.placeholder.com/200x300?text=3+Idiots" },
+                { id: 7, title: "Bajrangi Bhaijaan", year: 2015, rating: 4.6, image: "https://via.placeholder.com/200x300?text=Bajrangi" },
+                { id: 8, title: "Padmaavat", year: 2018, rating: 4.3, image: "https://via.placeholder.com/200x300?text=Padmaavat" }
+            ],
+            hollywood: [
+                { id: 9, title: "Avengers: Endgame", year: 2019, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Avengers" },
+                { id: 10, title: "Avatar: The Way of Water", year: 2022, rating: 4.7, image: "https://via.placeholder.com/200x300?text=Avatar+2" },
+                { id: 11, title: "Spider-Man: No Way Home", year: 2021, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Spider-Man" },
+                { id: 12, title: "The Batman", year: 2022, rating: 4.5, image: "https://via.placeholder.com/200x300?text=Batman" },
+                { id: 13, title: "Top Gun: Maverick", year: 2022, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Top+Gun" },
+                { id: 14, title: "Jurassic World Dominion", year: 2022, rating: 4.0, image: "https://via.placeholder.com/200x300?text=Jurassic" },
+                { id: 15, title: "Black Panther: Wakanda Forever", year: 2022, rating: 4.3, image: "https://via.placeholder.com/200x300?text=Black+Panther" },
+                { id: 16, title: "Doctor Strange 2", year: 2022, rating: 4.2, image: "https://via.placeholder.com/200x300?text=Doctor+Strange" }
+            ],
+            anime: [
+                { id: 17, title: "Demon Slayer", year: 2019, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Demon+Slayer" },
+                { id: 18, title: "Attack on Titan", year: 2013, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Attack+on+Titan" },
+                { id: 19, title: "Jujutsu Kaisen", year: 2020, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Jujutsu+Kaisen" },
+                { id: 20, title: "One Piece", year: 1999, rating: 4.9, image: "https://via.placeholder.com/200x300?text=One+Piece" },
+                { id: 21, title: "Naruto Shippuden", year: 2007, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Naruto" },
+                { id: 22, title: "My Hero Academia", year: 2016, rating: 4.7, image: "https://via.placeholder.com/200x300?text=My+Hero" },
+                { id: 23, title: "Death Note", year: 2006, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Death+Note" },
+                { id: 24, title: "Spy x Family", year: 2022, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Spy+x+Family" }
+            ],
+            kdrama: [
+                { id: 25, title: "Squid Game", year: 2021, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Squid+Game" },
+                { id: 26, title: "All of Us Are Dead", year: 2022, rating: 4.7, image: "https://via.placeholder.com/200x300?text=All+of+Us+Are+Dead" },
+                { id: 27, title: "Vincenzo", year: 2021, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Vincenzo" },
+                { id: 28, title: "Itaewon Class", year: 2020, rating: 4.7, image: "https://via.placeholder.com/200x300?text=Itaewon+Class" },
+                { id: 29, title: "Crash Landing on You", year: 2019, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Crash+Landing" },
+                { id: 30, title: "Extraordinary Attorney Woo", year: 2022, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Attorney+Woo" },
+                { id: 31, title: "Goblin", year: 2016, rating: 4.9, image: "https://via.placeholder.com/200x300?text=Goblin" },
+                { id: 32, title: "Descendants of the Sun", year: 2016, rating: 4.8, image: "https://via.placeholder.com/200x300?text=Descendants" }
+            ]
+        };
+        
+        // Pagination variables
+        let currentPage = 1;
+        const moviesPerPage = 8;
+        
+        // DOM Elements
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const currentPageSpan = document.getElementById('current-page');
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayMovies('bollywood', movieData.bollywood);
+            displayMovies('hollywood', movieData.hollywood);
+            displayMovies('anime', movieData.anime);
+            displayMovies('kdrama', movieData.kdrama);
+            
+            // Event listeners
+            searchBtn.addEventListener('click', searchMovies);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchMovies();
+                }
+            });
+            
+            prevPageBtn.addEventListener('click', goToPrevPage);
+            nextPageBtn.addEventListener('click', goToNextPage);
+        });
+        
+        // Display movies in a category
+        function displayMovies(category, movies) {
+            const container = document.getElementById(`${category}-movies`);
+            container.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * moviesPerPage;
+            const endIndex = startIndex + moviesPerPage;
+            const paginatedMovies = movies.slice(startIndex, endIndex);
+            
+            paginatedMovies.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.className = 'movie-card';
+                movieCard.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title}" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-meta">
+                            <span>${movie.year}</span>
+                            <span>⭐ ${movie.rating}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(movieCard);
+            });
+            
+            // Update pagination buttons
+            updatePaginationButtons(movies.length);
+        }
+        
+        // Search movies
+        function searchMovies() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                // If search is empty, show all movies
+                displayMovies('bollywood', movieData.bollywood);
+                displayMovies('hollywood', movieData.hollywood);
+                displayMovies('anime', movieData.anime);
+                displayMovies('kdrama', movieData.kdrama);
+                return;
+            }
+            
+            // Filter movies in all categories
+            const filteredBollywood = movieData.bollywood.filter(movie => 
+                movie.title.toLowerCase().includes(searchTerm)
+            );
+            
+            const filteredHollywood = movieData.hollywood.filter(movie => 
+                movie.title.toLowerCase().includes(searchTerm)
+            );
+            
+            const filteredAnime = movieData.anime.filter(movie => 
+                movie.title.toLowerCase().includes(searchTerm)
+            );
+            
+            const filteredKdrama = movieData.kdrama.filter(movie => 
+                movie.title.toLowerCase().includes(searchTerm)
+            );
+            
+            // Display filtered results
+            displayMovies('bollywood', filteredBollywood);
+            displayMovies('hollywood', filteredHollywood);
+            displayMovies('anime', filteredAnime);
+            displayMovies('kdrama', filteredKdrama);
+            
+            // Reset to first page when searching
+            currentPage = 1;
+            currentPageSpan.textContent = currentPage;
+        }
+        
+        // Pagination functions
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                currentPageSpan.textContent = currentPage;
+                displayAllCategories();
+            }
+        }
+        
+        function goToNextPage() {
+            // Check if there are more movies in any category
+            const hasMoreMovies = 
+                currentPage * moviesPerPage < movieData.bollywood.length ||
+                currentPage * moviesPerPage < movieData.hollywood.length ||
+                currentPage * moviesPerPage < movieData.anime.length ||
+                currentPage * moviesPerPage < movieData.kdrama.length;
+            
+            if (hasMoreMovies) {
+                currentPage++;
+                currentPageSpan.textContent = currentPage;
+                displayAllCategories();
+            }
+        }
+        
+        function updatePaginationButtons(totalMovies) {
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage * moviesPerPage >= totalMovies;
+        }
+        
+        function displayAllCategories() {
+            displayMovies('bollywood', movieData.bollywood);
+            displayMovies('hollywood', movieData.hollywood);
+            displayMovies('anime', movieData.anime);
+            displayMovies('kdrama', movieData.kdrama);
+        }
+    </script>
+</body>
+</html>
